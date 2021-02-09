@@ -1,0 +1,20 @@
+<%#= Custom file for A-Z collections page %>
+
+<% provide :page_title, construct_page_title(@presenter.title) %>
+<div itemscope itemtype="http://schema.org/CollectionPage">
+  <div class="row">
+    <div class="col-md-12">
+
+     	<ul id="all-collections" class="collections">
+		<% collections.each do |collection| %>
+    		<li data-id="<%= collection.id %>">
+        		<a href="/collections/<%= collection.id %>?locale=en">
+            	<img src="<%= collection.display_image_url(size: '265,') %>">
+            	<span><%= truncate(collection.title.first, length: 128, separator: ' ') %></span>
+        		</a>
+    		</li>
+		<% end %>
+
+    </div>
+  </div>
+</div>
