@@ -1,9 +1,10 @@
 class CollectionsController < Hyrax::CollectionsController
   layout :resolve_layout
   self.presenter_class = Ucsc::CollectionPresenter
-  load_and_authorize_resource except: [:index, :create, :show_all], instance_name: :collection
+  skip_load_and_authorize_resource :only => :show_all
 
   def resolve_layout
+    return "hyrax" if action_name == "show_all"
     query_collection_members
     return "collection_with_subcollections" if @subcollection_count > 0
     "hyrax"
