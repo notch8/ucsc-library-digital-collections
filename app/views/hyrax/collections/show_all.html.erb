@@ -1,20 +1,35 @@
 <%#= Custom file for A-Z collections page %>
 
-<% provide :page_title, construct_page_title(@presenter.title) %>
 <div itemscope itemtype="http://schema.org/CollectionPage">
   <div class="row">
     <div class="col-md-12">
 
-     	<ul id="all-collections" class="collections">
-		<% collections.each do |collection| %>
-    		<li data-id="<%= collection.id %>">
-        		<a href="/collections/<%= collection.id %>?locale=en">
-            	<img src="<%= collection.display_image_url(size: '265,') %>">
-            	<span><%= truncate(collection.title.first, length: 128, separator: ' ') %></span>
-        		</a>
-    		</li>
-		<% end %>
+		<header id="collection-description" class="row">
+			<div class="hyc-title"><h1><%= t("hyrax.collections.az.title") %></h1></div>
+			<p><%= t("hyrax.collections.az.description") %></p>
+		</header>
 
+		<div id="all-collections" class="collections row">
+			<div class="hyc-blacklight hyc-bl-title col-xs-12">
+				<h4><%= t("hyrax.collections.az.heading") %></h4>
+			</div>
+
+			<% @collections.each do |collection| %>
+			<div class="media col-sm-6" data-id="<%= collection.id %>">
+				<div class="media-left">
+					<a href="/collections/<%= collection.id %>?locale=en"><img src="<%= collection.display_image_url(size: '265,') %>" class="media-object"></a>
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading">
+						<a href="/collections/<%= collection.id %>?locale=en"><%= collection.title.first %></a>
+					</h4>
+					<p><%= simple_format(collection.description.first) %></p>
+				</div>
+			</div>
+			<% end %>
+
+			<div class="hyc-blacklight hyc-bl-pager"><%= render 'paginate' %></div>
+		</div>
     </div>
   </div>
 </div>
