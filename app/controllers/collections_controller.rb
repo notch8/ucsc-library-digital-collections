@@ -16,8 +16,7 @@ class CollectionsController < Hyrax::CollectionsController
   end
 
   def show_all
-	#@collections = collections
-	builder = Hyrax::CollectionSearchBuilder.new(self)
+	builder = Hyrax::CollectionSearchBuilder.new(self).with(params.except(:q))
     @response = repository.search(builder)
     @collections = @response.documents.select{ |col| ["open","campus"].include?(col.visibility)}
   rescue Blacklight::Exceptions::ECONNREFUSED, Blacklight::Exceptions::InvalidRequest
