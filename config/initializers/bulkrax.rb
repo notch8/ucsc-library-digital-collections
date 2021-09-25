@@ -5,6 +5,7 @@ Bulkrax.setup do |config|
   # config.parsers += [
   #   { name: 'MODS - My Local MODS parser', class_name: 'Bulkrax::ModsXmlParser', partial: 'mods_fields' },
   # ]
+  config.parsers = [{ name: 'CSV - Comma Separated Values', class_name: 'Bulkrax::CsvParser', partial: 'csv_fields' }]
 
   # WorkType to use as the default if none is specified in the import
   # Default is the first returned by Hyrax.config.curation_concerns
@@ -43,6 +44,84 @@ Bulkrax.setup do |config|
   #   config.field_mappings = {
   #     "Bulkrax::OaiDcParser" => { **individual field mappings go here*** }
   #   }
+
+  # TODO: remove unused duplicates (e.g. date_created or dateCreated)
+  config.field_mappings = {
+    'Bulkrax::CsvParser' => {
+      'accessRights' => { from: ['accessRights'] },
+      'accessionNumber' => { from: ['accessionNumber'] },
+      'based_near' => { from: ['based_near'] },
+      'bibliographic_citation' => { from: ['bibliographic_citation'] },
+      'boxFolder' => { from: ['boxFolder'] },
+      'collectionCallNumber' => { from: ['collectionCallNumber'] },
+      'contributor' => { from: ['contributor'] },
+      'coordinates' => { from: ['coordinates'] },
+      'creator' => { from: ['creator'] },
+      'dateCreated' => { from: ['dateCreated'] },
+      'dateCreatedDisplay' => { from: ['dateCreatedDisplay'] },
+      'dateDigitized' => { from: ['dateDigitized'] },
+      'dateOfSituation' => { from: ['dateOfSituation'] },
+      'datePublished' => { from: ['datePublished'] },
+      'date_created' => { from: ['date_created'] },
+      'date_digitized' => { from: ['date_digitized'] }, # ?
+      'description' => { from: ['description'] },
+      'descriptionAddress' => { from: ['descriptionAddress'] },
+      'descriptionFeature' => { from: ['descriptionFeature'] },
+      'descriptionNeighborhood' => { from: ['descriptionNeighborhood'] },
+      'descriptionStreet' => { from: ['descriptionStreet'] },
+      'descriptionTownshipRange' => { from: ['descriptionTownshipRange'] },
+      'digital_extent' => { from: ['digital_extent'] }, # ?
+      'digital_publisher_homepage' => { from: ['digital_publisher_homepage'] }, # ?
+      'displayRole' => { from: ['displayRole'] },
+      'donorProvenance' => { from: ['donorProvenance'] },
+      'extent' => { from: ['extent'] },
+      'filename' => { from: ['filename'] },
+      'genre' => { from: ['genre'] },
+      'identifier' => { from: ['identifier'] },
+      'import_url' => { from: ['import_url'] }, # ?
+      'independentlyDisplayed' => { from: ['independentlyDisplayed'] },
+      'itemCallNumber' => { from: ['itemCallNumber'] },
+      'keyword' => { from: ['keyword'] },
+      'label' => { from: ['label'] },
+      'language' => { from: ['language'] },
+      'license' => { from: ['license'] },
+      'masterFilename' => { from: ['masterFilename'] },
+      'metadataInheritance' => { from: ['metadataInheritance'] },
+      'metadataSource' => { from: ['metadataSource'] },
+      'originalPublisher' => { from: ['originalPublisher'] },
+      'owner' => { from: ['owner'] },
+      'parent' => { from: ['parent'] },
+      'physicalDescription' => { from: ['physicalDescription'] },
+      'physicalFormat' => { from: ['physicalFormat'] },
+      'physical_format' => { from: ['physical_format'] }, # ?
+      'publisher' => { from: ['publisher'] },
+      'publisherHomepage' => { from: ['publisherHomepage'] },
+      'relatedResource' => { from: ['relatedResource'] },
+      'related_url' => { from: ['related_url'] },
+      'relative_path' => { from: ['relative_path'] }, # ?
+      'resourceType' => { from: ['resourceType'] },
+      'resource_type' => { from: ['resource_type'] },
+      'rightsHolder' => { from: ['rightsHolder'] },
+      'rightsStatement' => { from: ['rightsStatement'] },
+      'rightsStatus' => { from: ['rightsStatus'] },
+      'rights_statement' => { from: ['rights_statement'] },
+      'scale' => { from: ['scale'] },
+      'series' => { from: ['series'] },
+      'source' => { from: ['source'] },
+      'staffNote' => { from: ['staffNote'] },
+      'subject' => { from: ['subject'] },
+      'subjectName' => { from: ['subjectName'] },
+      'subjectPlace' => { from: ['subjectPlace'] },
+      'subjectTemporal' => { from: ['subjectTemporal'] },
+      'subjectTitle' => { from: ['subjectTitle'] },
+      'subjectTopic' => { from: ['subjectTopic'] },
+      'subseries' => { from: ['subseries'] },
+      'theme' => { from: ['theme'] },
+      'title' => { from: ['title'] },
+      'titleAlternative' => { from: ['titleAlternative'] },
+      'workType' => { from: ['workType'] }
+    }
+  }
 
   # Add to, or change existing mappings as follows
   #   e.g. to exclude date
