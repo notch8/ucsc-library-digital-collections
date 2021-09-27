@@ -9,7 +9,7 @@ Bulkrax.setup do |config|
 
   # WorkType to use as the default if none is specified in the import
   # Default is the first returned by Hyrax.config.curation_concerns
-  # config.default_work_type = MyWork
+  config.default_work_type = 'Work'
 
   # Path to store pending imports
   # config.import_path = 'tmp/imports'
@@ -37,7 +37,7 @@ Bulkrax.setup do |config|
   # The mapping is supplied per Entry, provide the full class name as a string, eg. 'Bulkrax::CsvEntry'
   # The default value for CSV is collection
   # Add/replace parsers, for example:
-  # config.collection_field_mapping['Bulkrax::RdfEntry'] = 'http://opaquenamespace.org/ns/set'
+  config.collection_field_mapping['Bulkrax::CsvEntry'] = 'parent'
 
   # Field mappings
   # Create a completely new set of mappings by replacing the whole set as follows
@@ -47,6 +47,10 @@ Bulkrax.setup do |config|
 
   config.field_mappings = {
     'Bulkrax::CsvParser' => {
+      # Bulkrax mappings
+      'file' => { from: ['filename'] },
+      'model' => { from: ['workType', 'type'] },
+      # Metadata mappings
       'accessRights' => { from: ['accessRights'] },
       'accessionNumber' => { from: ['accessionNumber'] },
       'based_near' => { from: ['based_near', 'basedNear'] }, # only defined on Course
@@ -74,7 +78,6 @@ Bulkrax.setup do |config|
       'displayRole' => { from: ['displayRole'] },
       'donorProvenance' => { from: ['donorProvenance'] },
       'extent' => { from: ['extent'] },
-      'filename' => { from: ['filename'] },
       'genre' => { from: ['genre'] },
       'identifier' => { from: ['identifier'] }, # only defined on Course
       'import_url' => { excluded: true },
@@ -88,8 +91,7 @@ Bulkrax.setup do |config|
       'metadataInheritance' => { from: ['metadataInheritance'] },
       'metadataSource' => { from: ['metadataSource'] },
       'originalPublisher' => { from: ['originalPublisher'] },
-      'owner' => { from: ['owner'] },
-      'parent' => { from: ['parent'] },
+      'owner' => { excluded: true },
       'physicalDescription' => { from: ['physicalDescription'] },
       # 'physical_format' => { from: ['physical_format'] }, # only defined on Course and Lecture, use alt physicalFormat
       'physicalFormat' => { from: ['physicalFormat'] },
@@ -117,8 +119,7 @@ Bulkrax.setup do |config|
       'subseries' => { from: ['subseries'] },
       'theme' => { from: ['theme'] },
       'title' => { from: ['title'] },
-      'titleAlternative' => { from: ['titleAlternative'] },
-      'workType' => { from: ['workType'] }
+      'titleAlternative' => { from: ['titleAlternative'] }
     }
   }
 
