@@ -48,6 +48,7 @@ Bulkrax.setup do |config|
   config.field_mappings = {
     'Bulkrax::CsvParser' => {
       # Bulkrax mappings
+      'bulkrax_identifier' => { from: ['bulkrax_identifier'], source_identifier: true },
       'file' => { from: ['filename'] },
       'model' => { from: ['workType', 'type'] },
       # Metadata mappings
@@ -142,6 +143,7 @@ Bulkrax.setup do |config|
   #    config.fill_in_blank_source_identifiers = ->(parser, index) { "b-#{parser.importer.id}-#{index}"}
   # or use a uuid
   #    config.fill_in_blank_source_identifiers = ->(parser, index) { SecureRandom.uuid }
+  config.fill_in_blank_source_identifiers = ->(parser, index) { "#{parser.importerexporter.id}-#{index}" }
 
   # Properties that should not be used in imports/exports. They are reserved for use by Hyrax.
   # config.reserved_properties += ['my_field']
