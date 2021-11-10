@@ -40,6 +40,7 @@ class Work < ActiveFedora::Base
       self.send("#{field_name.to_s}=".to_sym,dateUpdate) if date_changed
     end
 
+    # TODO: need to add to Bulkrax::HasLocalProcessing#add_controlled_fields?
     # This section standardized ambiguous controlled vocab urls
     ::ScoobySnacks::METADATA_SCHEMA.controlled_field_names.each do |field_name|
       attributes = []

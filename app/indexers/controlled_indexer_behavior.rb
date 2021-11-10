@@ -92,6 +92,7 @@ module ControlledIndexerBehavior
 
   end
 
+  # TODO: need to add to Bulkrax::HasLocalProcessing#add_controlled_fields?
   def index_controlled_fields(solr_doc)
     return solr_doc unless object.persisted?
 
