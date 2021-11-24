@@ -21,24 +21,31 @@ module Bulkrax::HasLocalProcessing
   end
 
   def add_controlled_fields
-    ::ScoobySnacks::METADATA_SCHEMA.controlled_field_names.each do |field_name|
+    metadata_schema = ::ScoobySnacks::METADATA_SCHEMA
+
+    metadata_schema.controlled_field_names.each do |field_name|
       parsed_metadata.delete(field_name) # remove non-standardized values
-      next if raw_metadata[field_name].blank?
+      next if raw_metadata[field_name.downcase].blank?
 
       # TODO: ensure existing values don't get lost
-      raw_metadata[field_name].split(/\s*[|]\s*/).uniq.each_with_index do |value, i|
+      raw_metadata[field_name.downcase].split(/\s*[|]\s*/).uniq.each_with_index do |value, i|
         auth_id = if value.match?(::URI::DEFAULT_PARSER.make_regexp)
                     value # assume raw, user-provided URI is a valid authority
-                  else # attempt to lookup id by label
+                  else # find or create an authority
                     found_id = nil
-                    SOURCES_OF_AUTHORITIES.each do |auth_source|
+                    SOURCES_OF_AUTHORITIES.each do |auth_source| # attempt to lookup id
                       auth_source.subauthorities.each do |subauth|
                         subauthority = auth_source.subauthority_for(subauth)
                         found_id = subauthority.search(value)&.first&.dig('id')
                         break if found_id.present?
                       end
                     end
-                    found_id # mintLocalAuthUrl if nil
+                    if found_id.blank? # create local auth if unable to find one
+                      field = metadata_schema.get_field(field_name)
+                      auth_name = get_local_vocab_subauthority_for(field)
+                      found_id = mintLocalAuthUrl(auth_name, value)
+                    end
+                    found_id
                   end
         parsed_metadata["#{field_name}_attributes"] ||= {}
         parsed_metadata["#{field_name}_attributes"][i] = { 'id' => auth_id } if auth_id.present?

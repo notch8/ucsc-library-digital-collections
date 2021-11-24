@@ -122,14 +122,11 @@ module ControlledIndexerBehavior
         when String
           # This is just a normal string (from a legacy model, etc)
           # Go ahead and create a new entry in the appropriate local vocab, if there is one
-          if (local_vocab = field.vocabularies.find{|vocab| vocab['authority'].to_s.downcase == 'local'}).is_a?(Hash)
-            auth_name = local_vocab['subauthority']
-            mintLocalAuthUrl(auth_name, val) if auth_name.present?
-            label = val
-          else
-            #If have a random string and no local vocab, just move on for now
-            next
-          end
+          auth_name = get_local_vocab_subauthority_for(field)
+          next unless auth_name.present? # If have a random string and no local vocab, just move on for now
+
+          mintLocalAuthUrl(auth_name, val) if auth_name.present?
+          label = val
         else
           raise ArgumentError, "Can't handle #{val.class} as a metadata term"
         end
@@ -142,6 +139,13 @@ module ControlledIndexerBehavior
   end
 
   private 
+
+  def get_local_vocab_subauthority_for(field)
+    local_vocab = field.vocabularies.find { |vocab| vocab['authority'].to_s.downcase == 'local' }
+    return unless local_vocab.is_a?(Hash)
+
+    local_vocab['subauthority']
+  end
 
   def mintLocalAuthUrl(auth_name, value) 
     id = value.parameterize
