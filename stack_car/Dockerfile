@@ -70,4 +70,3 @@ ENTRYPOINT ["/app/samvera/hyrax-webapp/stack_car/ops/entrypoint.sh"]
 
 FROM hycruz-base as hycruz-worker
 ENV MALLOC_ARENA_MAX=2
-CMD bundle exec sidekiq
