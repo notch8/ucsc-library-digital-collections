@@ -42,7 +42,7 @@ services:
 
   worker:
     <<: *app
-    entrypoint: /bin/bash -l -c 'bundle exec sidekiq'
+    entrypoint: /bin/bash ./stack_car/ops/worker.sh
     container_name: worker
     env_file:
       - .env
