@@ -24,6 +24,7 @@ RUN apt-get -qq update \
                                               rsync \
                                               tzdata \
                                               unzip \
+                                              vim \
                                               wget \
                                               yarn \
                                               zip 
