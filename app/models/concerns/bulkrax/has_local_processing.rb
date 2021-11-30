@@ -48,13 +48,17 @@ module Bulkrax::HasLocalProcessing
 
   # @return [String, nil] URI for authority, or nil if one could not be found
   def search_authorities_for_id(field, value)
+    found_id = nil
+
     SOURCES_OF_AUTHORITIES.each do |auth_source, auth_name|
       subauth_name = get_subauthority_for(field: field, authority_name: auth_name)
       next unless subauth_name.present?
 
       subauthority = auth_source.subauthority_for(subauth_name)
-      subauthority.search(value)&.first&.dig('id')
+      found_id = subauthority.search(value)&.first&.dig('id')
     end
+
+    found_id
   end
 
   # @return [String, nil] URI for local authority, or nil if one could not be created
