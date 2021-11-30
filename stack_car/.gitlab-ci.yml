@@ -16,8 +16,8 @@ build:
   script:
     - cd stack_car
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker-compose build web worker
-    - docker-compose push web worker
+    - docker-compose build web worker images
+    - docker-compose push web worker images
   tags:
     - local
 
@@ -81,9 +81,11 @@ ucsc.staging:
       - n8-staging
   variables:
     DEPLOY_IMAGE: $CI_REGISTRY_IMAGE/web
-    WORKER_IMAGE: $CI_REGISTRY_IMAGE/worker
     DEPLOY_TAG: $CI_COMMIT_SHORT_SHA
+    WORKER_IMAGE: $CI_REGISTRY_IMAGE/worker
     WORKER_TAG: $CI_COMMIT_SHORT_SHA
+    CANTALOUPE_IMAGE: $CI_REGISTRY_IMAGE/images
+    CANTALOUPE_TAG: $CI_COMMIT_SHORT_SHA
     HELM_EXPERIMENTAL_OCI: 1
     HELM_RELEASE_NAME: ucsc-hyrax-staging
     KUBE_NAMESPACE: ucsc-hyrax-staging
