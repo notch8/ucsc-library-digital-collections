@@ -126,14 +126,12 @@ services:
       - "cantaloupe-log:/srv/cantaloupe-log:Z"
       - "cantaloupe-cache:/srv/cantaloupe-cache:Z"
       - "./kakadu:/usr/share/kakadu"
-
       - uploads:/app/samvera/hyrax-webapp/public/uploads
       - assets:/app/samvera/hyrax-webapp/public/assets
       - cache:/app/samvera/hyrax-webapp/tmp/cache
       - gems:/srv/bundle:Z
       - ../example_media:/srv/hycruz/public/example_media
       - ..:/app/samvera/hyrax-webapp
-
     environment:
       - VIRTUAL_PORT=8182
       - VIRTUAL_HOST=images.ucsc-dams.test
