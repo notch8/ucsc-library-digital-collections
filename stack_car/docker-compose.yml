@@ -42,7 +42,13 @@ services:
 
   worker:
     <<: *app
-    entrypoint: /bin/bash ./stack_car/ops/worker.sh
+    image: registry.gitlab.com/notch8/ucsc-library-digital-collections/worker:${TAG:-latest}
+    build:
+      context: ..
+      dockerfile: ./stack_car/Dockerfile
+      target: hycruz-worker
+      args:
+        - EXTRA_APK_PACKAGES=less vim bash openjdk11-jre ffmpeg rsync
     container_name: worker
     env_file:
       - .env
