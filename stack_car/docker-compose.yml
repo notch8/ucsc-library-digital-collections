@@ -62,6 +62,7 @@ services:
 
   fcrepo:
     image: ghcr.io/samvera/fcrepo4:4.7.5
+    container_name: fcrepo
     volumes:
       - fcrepo:/data:cached
     env_file:
