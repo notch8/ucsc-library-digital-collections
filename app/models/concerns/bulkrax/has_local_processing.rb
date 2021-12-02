@@ -32,16 +32,19 @@ module Bulkrax::HasLocalProcessing
     metadata_schema.controlled_field_names.each do |field_name|
       field = metadata_schema.get_field(field_name)
       parsed_metadata.delete(field_name) # remove non-standardized values
-      next if raw_metadata[field_name.downcase].blank?
+      raw_metadata_keys_for_field = raw_metadata.select { |k, _v| k.match?(/#{field_name.downcase}(_\d+)?/) }&.keys
+      next if raw_metadata_keys_for_field.blank?
 
-      raw_metadata[field_name.downcase].split(/\s*[|]\s*/).uniq.each_with_index do |value, i|
-        auth_id = value if value.match?(::URI::DEFAULT_PARSER.make_regexp) # assume raw, user-provided URI is a valid authority
-        auth_id ||= search_authorities_for_id(field, value)
-        auth_id ||= create_local_authority_id(field, value)
-        next unless auth_id.present?
+      raw_metadata_keys_for_field.each_with_index do |k, i|
+        raw_metadata[k].split(/\s*[|]\s*/).uniq.each do |value|
+          auth_id = value if value.match?(::URI::DEFAULT_PARSER.make_regexp) # assume raw, user-provided URI is a valid authority
+          auth_id ||= search_authorities_for_id(field, value)
+          auth_id ||= create_local_authority_id(field, value)
+          next unless auth_id.present?
 
-        parsed_metadata["#{field_name}_attributes"] ||= {}
-        parsed_metadata["#{field_name}_attributes"][i] = { 'id' => auth_id }
+          parsed_metadata["#{field_name}_attributes"] ||= {}
+          parsed_metadata["#{field_name}_attributes"][i] = { 'id' => auth_id }
+        end
       end
     end
   end
