@@ -60,6 +60,8 @@ ENV LD_LIBRARY_PATH /usr/share/kakadu:/app/fits/tools/mediainfo/linux
 
 ARG APP_PATH=.
 COPY --chown=1001:1001 $APP_PATH/Gemfile* /app/samvera/hyrax-webapp/
+# Uncomment if developing Bulkrax within this application
+# COPY --chown=1001:1001 $APP_PATH/vendor/engines/bulkrax /app/samvera/hyrax-webapp/vendor/engines/bulkrax
 RUN bundle install --jobs "$(nproc)"
 
 COPY stack_car/kakadu /usr/share/kakadu
