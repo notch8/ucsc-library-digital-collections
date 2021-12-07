@@ -20,18 +20,8 @@ Bulkrax.setup do |config|
   # Server name for oai request header
   # config.server_name = 'my_server@name.com'
 
-  # Field_mapping for establishing a parent-child relationship (FROM parent TO child)
-  # This can be a Collection to Work, or Work to Work relationship
-  # This value IS NOT used for OAI, so setting the OAI Entries here will have no effect
-  # The mapping is supplied per Entry, provide the full class name as a string, eg. 'Bulkrax::CsvEntry'
-  # Example:
-  #   {
-  #     'Bulkrax::RdfEntry'  => 'http://opaquenamespace.org/ns/contents',
-  #     'Bulkrax::CsvEntry'  => 'children'
-  #   }
-  # By default no parent-child relationships are added
-  # config.parent_child_field_mapping = { }
-
+  # NOTE: Creating Collections using the collection_field_mapping will no longer supported as of version Bulkrax v2.
+  #       Please configure Bulkrax to use related_parents_field_mapping and related_children_field_mapping instead.
   # Field_mapping for establishing a collection relationship (FROM work TO collection)
   # This value IS NOT used for OAI, so setting the OAI parser here will have no effect
   # The mapping is supplied per Entry, provide the full class name as a string, eg. 'Bulkrax::CsvEntry'
@@ -52,8 +42,7 @@ Bulkrax.setup do |config|
       'model' => { from: ['worktype', 'type', 'model'] },
       'title' => { from: ['title'], split: /\s*[|]\s*/ },
       'visibility' => { from: ['visibility'] },
-      # 'parent' => { from: ['parent'], split: /\s*[|]\s*/ },
-      'parent' => { excluded: true },
+      'parent' => { from: ['parent'], split: /\s*[|]\s*/, related_parents_field_mapping: true },
       'titleAlternative' => { from: ['titlealternative'], split: /\s*[|]\s*/ },
       'accessRights' => { from: ['accessrights'], split: /\s*[|]\s*/ },
       'accessionNumber' => { from: ['accessionnumber'], split: /\s*[|]\s*/ },

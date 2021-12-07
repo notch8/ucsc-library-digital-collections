@@ -84,7 +84,7 @@ services:
     env_file:
       - .env
       - .env.development
-    restart: always
+    restart: on-failure
     volumes:
       - "database-data:/var/lib/mysql:Z"
 
