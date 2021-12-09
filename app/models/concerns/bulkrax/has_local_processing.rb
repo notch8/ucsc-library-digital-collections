@@ -36,6 +36,8 @@ module Bulkrax::HasLocalProcessing
       next if raw_metadata_keys_for_field.blank?
 
       raw_metadata_keys_for_field.each_with_index do |k, i|
+        next if raw_metadata[k].blank?
+
         raw_metadata[k].split(/\s*[|]\s*/).uniq.each do |value|
           auth_id = value if value.match?(::URI::DEFAULT_PARSER.make_regexp) # assume raw, user-provided URI is a valid authority
           auth_id ||= search_authorities_for_id(field, value)
