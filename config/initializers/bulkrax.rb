@@ -71,7 +71,6 @@ Bulkrax.setup do |config|
       'independentlyDisplayed' => { from: ['independentlydisplayed'], split: /\s*[|]\s*/ },
       'itemCallNumber' => { from: ['itemcallnumber'], split: /\s*[|]\s*/ },
       'keyword' => { from: ['keyword'], split: /\s*[|]\s*/ },
-      'label' => { from: ['label'], split: /\s*[|]\s*/ },
       'language' => { from: ['language'], split: /\s*[|]\s*/ },
       'masterFilename' => { from: ['masterfilename'], split: /\s*[|]\s*/ },
       'metadataInheritance' => { from: ['metadatainheritance'], split: /\s*[|]\s*/ },
