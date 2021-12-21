@@ -110,6 +110,7 @@ services:
     environment:
       - VIRTUAL_PORT=8983
       - VIRTUAL_HOST=solr.ucsc-dams.test
+      - LOG4J_FORMAT_MSG_NO_LOOKUPS=true
 
   images:
     image: registry.gitlab.com/notch8/ucsc-library-digital-collections/images:${TAG:-latest}
