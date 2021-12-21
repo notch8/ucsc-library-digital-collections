@@ -73,7 +73,7 @@ services:
       - JAVA_OPTS=${JAVA_OPTS} -Dfcrepo.modeshape.configuration="classpath:/config/file-simple/repository.json" -Dfcrepo.object.directory="/data/objects" -Dfcrepo.binary.directory="/data/binaries"
     expose:
       - 8080
-    
+
   db:
     image: mysql:5.7
     container_name: mysql
@@ -109,6 +109,7 @@ services:
     environment:
       - VIRTUAL_PORT=8983
       - VIRTUAL_HOST=solr.ucsc-dams.test
+      - LOG4J_FORMAT_MSG_NO_LOOKUPS=true
 
   images:
     image: registry.gitlab.com/notch8/ucsc-library-digital-collections/images:${TAG:-latest}
